@@ -60,18 +60,27 @@ export function useExcitedCounter(initialCount = 0) {
   // Restore pending clicks across refresh/close + fetch fresh global
   // count (SSR/prerender bakes a stale loader value) + flush on tab hide.
   useEffect(() => {
-    // Fresh global count — the loader value may be prerendered at build
-    // time, so revalidate on mount. Math.max avoids clobbering a newer
-    // value from a just-completed flush (count never decreases).
-    void getExcitedCount()
-      .then(({ count }) => {
-        setGlobalCount((prev) => Math.max(prev, count))
-        setIsCountReady(true)
-      })
-      .catch(() => {
-        /* keep loader value on failure */
-        setIsCountReady(true)
-      })
+    // Fresh global count — deferred past the hero entrance (~1.3s) via
+    // idle time so the network + re-render never contends with the
+    // entrance animations and cause visible jank.
+    const fetchFresh = () => {
+      void getExcitedCount()
+        .then(({ count }) => {
+          setGlobalCount((prev) => Math.max(prev, count))
+          setIsCountReady(true)
+        })
+        .catch(() => {
+          /* keep loader value on failure */
+          setIsCountReady(true)
+        })
+    }
+    let idleId = 0
+    let fallbackId: ReturnType<typeof setTimeout> | null = null
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(fetchFresh, { timeout: 2500 })
+    } else {
+      fallbackId = setTimeout(fetchFresh, 1500)
+    }
     try {
       const saved = Number(localStorage.getItem(PENDING_KEY) ?? '0')
       if (Number.isFinite(saved) && saved > 0) {
@@ -101,6 +110,10 @@ export function useExcitedCounter(initialCount = 0) {
       window.removeEventListener('beforeunload', onBeforeUnload)
       document.removeEventListener('visibilitychange', onVisibilityChange)
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      if (idleId && 'cancelIdleCallback' in window) {
+        window.cancelIdleCallback(idleId)
+      }
+      if (fallbackId) clearTimeout(fallbackId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

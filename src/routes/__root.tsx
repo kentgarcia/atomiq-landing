@@ -36,6 +36,21 @@ export const Route = createRootRoute({
         type: 'image/png',
         fetchpriority: 'high',
       },
+      // Hero LCP: mascot + heaviest flag decode mid-entrance otherwise,
+      // which shows up as a hitch right when the pop plays.
+      {
+        rel: 'preload',
+        href: '/mascot.svg',
+        as: 'image',
+        type: 'image/svg+xml',
+        fetchpriority: 'high',
+      },
+      {
+        rel: 'preload',
+        href: '/images/hologram-monitor.svg',
+        as: 'image',
+        type: 'image/svg+xml',
+      },
       {
         rel: 'icon',
         type: 'image/png',

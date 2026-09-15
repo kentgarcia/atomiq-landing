@@ -15,7 +15,7 @@ export function Hero({ displayedCount, isCountReady, onExcited }: HeroProps) {
 
       {heroFlags.map((flag) => (
         <div key={flag.label} className={`hero-flag ${flag.className}`} aria-hidden="true">
-          <img src={flag.src} alt="" width={96} height={96} loading="lazy" />
+          <img src={flag.src} alt="" width={96} height={96} loading="eager" decoding="async" />
         </div>
       ))}
 
@@ -61,6 +61,9 @@ export function Hero({ displayedCount, isCountReady, onExcited }: HeroProps) {
             alt="Atomiq mascot"
             width={560}
             height={510}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
         </div>
       </div>
