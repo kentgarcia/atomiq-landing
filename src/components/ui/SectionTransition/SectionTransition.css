@@ -1,0 +1,173 @@
+/* Section transitions — wavy pastel ribbons between light sections,
+   clean wave morphs into and out of the dark Challenge section. */
+
+/* 0. Gradient divider — center color fading to both ends. */
+.st-gradient {
+  background: #ffffff;
+  padding: 18px 0;
+  line-height: 0;
+}
+
+.st-gradient__line {
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 138, 26, 0) 12%,
+    rgba(255, 138, 26, 0.55) 38%,
+    rgba(59, 155, 233, 0.55) 62%,
+    rgba(59, 155, 233, 0) 88%,
+    transparent 100%
+  );
+}
+
+/* 0b. Blend wave — Explore glow on top melting into Myth Smashers dark. */
+.st-blend {
+  line-height: 0;
+  margin: -1px 0;
+  background:
+    radial-gradient(circle at 8% 100%, rgba(59, 155, 233, 0.08), transparent 45%),
+    radial-gradient(circle at 92% 100%, rgba(255, 138, 26, 0.1), transparent 45%),
+    #ffffff;
+}
+
+.st-blend svg {
+  display: block;
+  width: 100%;
+  height: clamp(70px, 9vw, 110px);
+}
+
+/* 0c. Blend-out wave — Myth Smashers dark melting into light below. */
+.st-blend-out {
+  line-height: 0;
+  margin: -1px 0;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(139, 92, 246, 0.25), transparent 50%),
+    radial-gradient(circle at 88% 0%, rgba(59, 155, 233, 0.2), transparent 50%),
+    #171226;
+}
+
+.st-blend-out svg {
+  display: block;
+  width: 100%;
+  height: clamp(70px, 9vw, 110px);
+}
+
+/* 1. Diagonal bar — caps the hero's cut-off rays with a full-width strip. */
+.st-diagonal {
+  background: #ffffff;
+  padding: 0;
+  line-height: 0;
+}
+
+.st-diagonal__bar {
+  height: 26px;
+  background:
+    repeating-linear-gradient(
+      -55deg,
+      #fdebd3 0 14px,
+      #fde3c2 14px 28px,
+      #d9ecfd 28px 42px,
+      #c9e4fa 42px 56px
+    );
+  border-top: 2px solid #f0f0f0;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+/* 2. Seam — wavy band that connects Discover → Explore with no white gaps. */
+.st-seam {
+  line-height: 0;
+  margin: -1px 0;
+  background: linear-gradient(180deg, #fff7ec 0%, #eef4ff 50%, #fff7ec 100%);
+}
+
+.st-seam__top svg,
+.st-seam__bottom svg {
+  display: block;
+  width: 100%;
+  height: clamp(40px, 5vw, 70px);
+}
+
+.st-seam__band {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 26px;
+}
+
+.st-seam__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: st-float 3.2s ease-in-out infinite;
+}
+
+.st-seam__dot--1 { background: #ff8a1a; }
+.st-seam__dot--2 { background: #3b9be9; animation-delay: -1s; }
+.st-seam__dot--3 { background: #8b5cf6; animation-delay: -2s; }
+
+.st-wave {
+  line-height: 0;
+  margin-bottom: -1px;
+}
+
+.st-wave svg {
+  display: block;
+  width: 100%;
+  height: clamp(56px, 8vw, 90px);
+}
+
+.st-ribbon {
+  line-height: 0;
+  margin: -1px 0;
+}
+
+.st-ribbon__edge {
+  display: block;
+  width: 100%;
+  height: clamp(30px, 4vw, 48px);
+}
+
+.st-ribbon__mid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 30px;
+}
+
+.st-ribbon__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  opacity: 0.55;
+  animation: st-float 3.2s ease-in-out infinite;
+}
+
+.st-ribbon__dot--1 {
+  background: #ff8a1a;
+}
+
+.st-ribbon__dot--2 {
+  background: #3b9be9;
+  animation-delay: -1s;
+}
+
+.st-ribbon__dot--3 {
+  background: #8b5cf6;
+  animation-delay: -2s;
+}
+
+@keyframes st-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-ribbon__dot {
+    animation: none;
+  }
+}

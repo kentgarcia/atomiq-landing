@@ -1,0 +1,59 @@
+/* Typography — SunghyunSans + base font stack. */
+
+@font-face {
+  font-family: 'SunghyunSans';
+  src: url('/fonts/SunghyunSans-Web/SunghyunSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SunghyunSans';
+  src: url('/fonts/SunghyunSans-Web/SunghyunSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SunghyunSans';
+  src: url('/fonts/SunghyunSans-Web/SunghyunSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SunghyunSans';
+  src: url('/fonts/SunghyunSans-Web/SunghyunSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SunghyunSans';
+  src: url('/fonts/SunghyunSans-Web/SunghyunSans-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family:
+    'SunghyunSans',
+    ui-rounded,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  background: #ffffff;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

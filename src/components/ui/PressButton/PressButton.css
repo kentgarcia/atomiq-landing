@@ -1,0 +1,189 @@
+/* Pill button — pure HTML/CSS layers (no SVG).
+   Geometry mirrors the 1350x320 spec: full-bleed shadow below,
+   base inset 1.65% per side, face same inset with a slim base lip.
+   Rest = face raised above its seat; press = face drops to its seat
+   (top flush with base top, so no base shows on top). Base/shadow static. */
+
+.press-btn {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --press-duration: 130ms;
+
+  position: relative;
+  display: inline-block;
+  width: min(360px, 80vw);
+  aspect-ratio: 1350 / 320;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  container-type: inline-size;
+}
+
+.press-btn:focus-visible {
+  outline: 2px solid #a8a29e;
+  outline-offset: 6px;
+  border-radius: 999px;
+}
+
+/* Shadow — full bleed, top at 18.75%, static */
+.press-btn__shadow {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 18.75%;
+  bottom: 0%;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  border-radius: 7.41cqi;
+}
+
+/* Base — inset 1.65% sides, slim lip at the bottom, static */
+.press-btn__base {
+  position: absolute;
+  left: 1.65%;
+  right: 1.65%;
+  top: 0%;
+  bottom: 4.17%;
+  background: #292524;
+  border-radius: 999px;
+  border-radius: 7.41cqi;
+  box-shadow:
+    inset -36px 25px 11px rgba(255, 255, 255, 0.1),
+    inset 36px 25px 11px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset -9.88cqi 7.04cqi 3.1cqi rgba(255, 255, 255, 0.1),
+    inset 9.88cqi 7.04cqi 3.1cqi rgba(0, 0, 0, 0.55);
+}
+
+/* Face — same inset as base, raised at rest, drops on press */
+.press-btn__face {
+  position: absolute;
+  left: 1.65%;
+  right: 1.65%;
+  top: 0%;
+  bottom: 15.1%;
+  background: #44403c;
+  border-radius: 999px;
+  border-radius: 7.41cqi;
+  transform: translateY(-18%);
+  transition: transform var(--press-duration) var(--ease-out);
+  will-change: transform;
+}
+
+.press-btn__label {
+  position: absolute;
+  left: 1.65%;
+  right: 1.65%;
+  top: 0;
+  height: 84.9%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fafaf9;
+  font-family:
+    'SunghyunSans',
+    ui-rounded,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: clamp(1rem, 2.5vw + 0.75rem, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  transform: translateY(-18%);
+  transition: transform var(--press-duration) var(--ease-out);
+  will-change: transform;
+}
+
+/* Pressed: raised face drops to its seat (top flush with base top,
+   bottom lip remains) — base/shadow stay static */
+.press-btn:active .press-btn__face {
+  transform: translateY(0);
+}
+
+.press-btn:active .press-btn__label {
+  transform: translateY(0);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .press-btn:hover .press-btn__face {
+    background: #4d4844;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press-btn__face,
+  .press-btn__label {
+    transition-duration: 0.01ms;
+  }
+  .press-pop {
+    display: none;
+  }
+}
+
+/* Goofy +1 spam pops — white fill, orange stroke, random per-pop motion */
+.press-btn__pops {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.press-pop {
+  position: absolute;
+  top: -6%;
+  font-family:
+    'SunghyunSans',
+    ui-rounded,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.1rem, 4cqi + 0.8rem, 1.9rem);
+  line-height: 1;
+  color: #fff;
+  -webkit-text-stroke: 2px #ff8a1a;
+  paint-order: stroke fill;
+  text-shadow:
+    0 2px 0 #ff8a1a,
+    2px 0 0 #ff8a1a,
+    -2px 0 0 #ff8a1a,
+    0 -2px 0 #ff8a1a,
+    2px 2px 0 #ff8a1a,
+    -2px 2px 0 #ff8a1a,
+    2px -2px 0 #ff8a1a,
+    -2px -2px 0 #ff8a1a,
+    0 6px 14px rgba(255, 138, 26, 0.35);
+  transform: translate(-50%, 0) rotate(0deg) scale(0.4);
+  opacity: 0;
+  animation: press-pop var(--dur, 0.9s) cubic-bezier(0.2, 0.8, 0.3, 1.2) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes press-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px) rotate(calc(var(--rot, 0deg) * -1)) scale(0.4);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--drift, 0px) * 0.15), calc(-1 * var(--rise, 120px) * 0.35)) rotate(var(--rot, 0deg)) scale(var(--pscale, 1.2));
+  }
+  55% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--drift, 0px) * 0.7), calc(-1 * var(--rise, 120px) * 0.75)) rotate(calc(var(--rot, 0deg) + var(--spin, 0deg) * 0.5)) scale(var(--pscale, 1.2));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--drift, 0px)), calc(-1 * var(--rise, 120px))) rotate(calc(var(--rot, 0deg) + var(--spin, 0deg))) scale(calc(var(--pscale, 1.2) * 0.85));
+  }
+}

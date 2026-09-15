@@ -1,0 +1,258 @@
+/* ShrodiModal — playful compact preview: "Learn with Shrodi →" opens a mini chat. */
+
+.shrodi-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(17, 17, 17, 0.55);
+  backdrop-filter: blur(4px);
+  animation: shrodi-modal-fade 180ms ease;
+}
+
+@keyframes shrodi-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.shrodi-modal {
+  position: relative;
+  width: min(420px, 100%);
+  max-height: min(88svh, 640px);
+  overflow-y: auto;
+  background: #fffdf8;
+  border: 2px solid #111;
+  border-radius: 28px;
+  box-shadow: 0 8px 0 #111;
+  padding: 22px 20px 20px;
+  animation: shrodi-modal-pop 220ms cubic-bezier(0.2, 0.9, 0.28, 1.2);
+}
+
+@keyframes shrodi-modal-pop {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+.shrodi-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #e5e5e5;
+  background: #fff;
+  color: #111;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.shrodi-modal__close:hover {
+  background: #f5f5f5;
+  transform: rotate(90deg);
+}
+
+.shrodi-modal__hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 138, 26, 0.18), transparent 60%),
+    #fbfbfb;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 14px;
+}
+
+.shrodi-modal__mascot {
+  width: 84px;
+  height: auto;
+  flex-shrink: 0;
+  animation: shrodi-modal-float 4s ease-in-out infinite;
+}
+
+@keyframes shrodi-modal-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
+}
+
+.shrodi-modal__eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff8a1a;
+}
+
+.shrodi-modal__title {
+  margin: 2px 0 0;
+  font-size: 1.3rem;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #111;
+}
+
+.shrodi-modal__sub {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #4b4b4b;
+}
+
+.shrodi-modal__chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.shrodi-modal__bubble {
+  border-radius: 18px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  animation: shrodi-modal-fade 200ms ease;
+}
+
+.shrodi-modal__bubble--user {
+  align-self: flex-end;
+  max-width: 92%;
+  background: #3b9be9;
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+
+.shrodi-modal__bubble--bot {
+  align-self: flex-start;
+  max-width: 94%;
+  background: #fff;
+  color: #171226;
+  border: 2px solid #e5e5e5;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 3px 0 #e5e5e5;
+}
+
+.shrodi-modal__who {
+  font-weight: 800;
+}
+
+.shrodi-modal__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.shrodi-modal__chip {
+  appearance: none;
+  border: 2px solid #e5e5e5;
+  background: #fff;
+  color: #4b4b4b;
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.shrodi-modal__chip:hover {
+  border-color: #ff8a1a;
+  background: #fff4e5;
+  color: #111;
+}
+
+.shrodi-modal__chip--active {
+  border-color: #ff8a1a;
+  background: #ff8a1a;
+  color: #fff;
+}
+
+.shrodi-modal__footer {
+  margin-top: 16px;
+  text-align: center;
+  border-top: 2px dashed #e5e5e5;
+  padding-top: 14px;
+}
+
+.shrodi-modal__more {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #4b4b4b;
+}
+
+.shrodi-modal__cta {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: #ff9600;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 0 #b96a00;
+  transition:
+    transform 100ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 100ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 150ms ease;
+}
+
+.shrodi-modal__cta:hover {
+  filter: brightness(1.05);
+}
+
+.shrodi-modal__cta:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #b96a00;
+}
+
+@media (max-width: 480px) {
+  .shrodi-modal {
+    padding: 18px 16px 16px;
+    border-radius: 24px;
+  }
+
+  .shrodi-modal__mascot {
+    width: 68px;
+  }
+
+  .shrodi-modal__title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shrodi-modal__overlay,
+  .shrodi-modal,
+  .shrodi-modal__mascot,
+  .shrodi-modal__bubble {
+    animation: none;
+  }
+
+  .shrodi-modal__close:hover {
+    transform: none;
+  }
+}

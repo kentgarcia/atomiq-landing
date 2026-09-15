@@ -1,0 +1,377 @@
+/* Explore — "AtomIQ universe": mascot core with 4 floating feature cards. */
+
+.explore {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 96px 20px;
+}
+
+.explore-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle, rgba(255, 138, 26, 0.35) 1.6px, transparent 2.2px),
+    radial-gradient(circle, rgba(59, 155, 233, 0.3) 1.3px, transparent 1.9px);
+  background-size:
+    34px 34px,
+    26px 26px;
+  background-position:
+    0 0,
+    13px 13px;
+  -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 0%, #000 55%, transparent 85%);
+  mask-image: radial-gradient(circle at 50% 45%, #000 0%, #000 55%, transparent 85%);
+}
+
+.explore-orbit {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  border: 2px dashed rgba(17, 17, 17, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.explore-orbit--1 {
+  width: min(880px, 130vw);
+  aspect-ratio: 1.6 / 1;
+  transform: translate(-50%, -50%) rotate(-6deg);
+}
+
+.explore-orbit--2 {
+  width: min(1120px, 160vw);
+  aspect-ratio: 1.7 / 1;
+  transform: translate(-50%, -50%) rotate(4deg);
+}
+
+.explore-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.explore-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.explore-eyebrow {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #52525b;
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  border-radius: 999px;
+  padding: 9px 16px;
+  box-shadow: 0 3px 0 #e5e5e5;
+}
+
+.explore-title {
+  margin: 18px 0 0;
+  font-size: clamp(2rem, 4.5vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  color: #111;
+}
+
+.explore-highlight {
+  display: inline-block;
+  background: #3b9be9;
+  color: #fff;
+  padding: 0 14px 4px;
+  border-radius: 14px;
+  transform: rotate(1deg);
+}
+
+.explore-sub {
+  margin: 14px auto 0;
+  max-width: 46ch;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: #4b4b4b;
+}
+
+.explore-universe {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.explore-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.explore-card {
+  background: #fff;
+  border: 2px solid #e5e5e5;
+  border-radius: 24px;
+  box-shadow: 0 4px 0 #e5e5e5;
+  padding: 22px 20px;
+  animation: explore-float 7s ease-in-out infinite;
+}
+
+.explore-float--1 { animation-delay: -1s; }
+.explore-float--2 { animation-delay: -3.5s; }
+.explore-float--3 { animation-delay: -2s; }
+.explore-float--4 { animation-delay: -5s; }
+
+@keyframes explore-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+
+.explore-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  margin-bottom: 14px;
+}
+
+.explore-card__icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.explore-card--orange .explore-card__icon {
+  background: #fff1de;
+  color: #ff8a1a;
+}
+
+.explore-card--red .explore-card__icon {
+  background: #fdecec;
+  color: #e85d5d;
+}
+
+.explore-card--blue .explore-card__icon {
+  background: #e8f3fd;
+  color: #3b9be9;
+}
+
+.explore-card--purple .explore-card__icon {
+  background: #f1eafd;
+  color: #8b5cf6;
+}
+
+.explore-card__title {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.explore-card__text {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #777777;
+}
+
+/* Core — Shrodi spotlight with orbiting electrons */
+.explore-core {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 36px;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 138, 26, 0.16), transparent 62%),
+    #fbfbfb;
+  border: 2px solid #e5e5e5;
+  box-shadow: 0 6px 0 #e5e5e5;
+  padding: 30px 24px 26px;
+  overflow: hidden;
+  scroll-margin-top: 110px;
+}
+
+.explore-core__glow {
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  width: min(380px, 80%);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 150, 0, 0.22), transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.explore-core__ring {
+  position: absolute;
+  left: 50%;
+  top: 26%;
+  border: 2px solid rgba(17, 17, 17, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.explore-core__ring--1 {
+  width: min(340px, 78%);
+  aspect-ratio: 1.35 / 1;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  animation: ring-spin 14s linear infinite;
+}
+
+.explore-core__ring--2 {
+  width: min(420px, 94%);
+  aspect-ratio: 1.45 / 1;
+  transform: translate(-50%, -50%) rotate(10deg);
+  animation: ring-spin 20s linear infinite reverse;
+}
+
+@keyframes ring-spin {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+.explore-core__electron {
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ff8a1a;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(255, 138, 26, 0.5);
+}
+
+.explore-core__ring--2 .explore-core__electron {
+  background: #3b9be9;
+  box-shadow: 0 2px 8px rgba(59, 155, 233, 0.5);
+}
+
+.explore-core__mascot {
+  position: relative;
+  z-index: 1;
+  width: min(200px, 52%);
+  height: auto;
+  margin-top: 12px;
+  animation: explore-float 5.5s ease-in-out infinite;
+}
+
+.explore-core__badge {
+  position: relative;
+  z-index: 1;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #111;
+  border-radius: 999px;
+  padding: 7px 16px;
+}
+
+.explore-core__title {
+  position: relative;
+  z-index: 1;
+  margin: 16px 0 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+  color: #111;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.explore-core__text {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #4b4b4b;
+  text-align: center;
+  max-width: 36ch;
+}
+
+.explore-core__cta {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 999px;
+  background: #ff9600;
+  color: #fff;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #b96a00;
+  transition:
+    transform 100ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 100ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 150ms ease;
+}
+
+.explore-core__cta:hover {
+  filter: brightness(1.05);
+}
+
+.explore-core__cta:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #b96a00;
+}
+
+@media (max-width: 960px) {
+  .explore-universe {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .explore-core {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .explore {
+    padding: 64px 16px 80px;
+  }
+
+  .explore-universe {
+    grid-template-columns: 1fr;
+    margin-top: 40px;
+  }
+
+  .explore-core__title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore-card,
+  .explore-core__mascot,
+  .explore-core__ring--1,
+  .explore-core__ring--2 {
+    animation: none;
+  }
+}

@@ -1,0 +1,102 @@
+/* Global base styles for atomiq-landing. */
+@import './variables.css';
+@import './typography.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Full-screen sections — one section per viewport.
+   min-height (not height) so taller content can still grow
+   instead of being cut off on smaller screens. */
+.hero,
+.intro,
+.explore,
+.challenge,
+.journey,
+.team,
+.faq,
+.final {
+  min-height: 100svh;
+}
+
+.hero,
+.intro,
+.explore,
+.challenge,
+.journey,
+.team,
+.faq {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-inner,
+.intro-inner,
+.explore-inner,
+.challenge-inner,
+.journey-inner,
+.team-inner,
+.faq-inner {
+  width: 100%;
+}
+
+/* Shared scroll-reveal — sections opt in with `class="reveal"`,
+   children stagger with `class="reveal-child"` + `--i` index.
+   Uses `translate` (not `transform`) so it never clobbers
+   card transforms like the leader-card lift.
+   Reveal runs as an animation so hover transitions stay snappy. */
+.reveal .reveal-child {
+  opacity: 0;
+  translate: 0 28px;
+}
+
+.reveal.is-visible .reveal-child {
+  opacity: 1;
+  translate: 0 0;
+  animation: reveal-up 0.7s cubic-bezier(0.2, 0.9, 0.28, 1.1) backwards;
+  animation-delay: calc(var(--i, 0) * 110ms);
+  will-change: opacity, translate;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal .reveal-child,
+  .reveal.is-visible .reveal-child {
+    opacity: 1;
+    translate: 0 0;
+    animation: none;
+  }
+}
