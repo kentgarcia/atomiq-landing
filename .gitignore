@@ -5,6 +5,8 @@ node_modules/
 dist/
 .output/
 .build/
+.nitro/
+.vercel/
 
 # route tree (generated)
 src/routeTree.gen.ts

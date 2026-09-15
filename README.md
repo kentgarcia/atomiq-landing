@@ -75,7 +75,7 @@ This repo is the **marketing landing page** for AtomIQ: a fast, SEO-first, fully
 | Data | TanStack Start server functions (`createServerFn`), Zod validation |
 | Backend | Supabase Postgres (`excited_counts` table + RPC increment) |
 | Fonts | SunghyunSans (Regular → ExtraBold, `woff2`, `font-display: swap`) |
-| Prod server | `srvx` serving `dist/server/server.js` + `dist/client/` |
+| Deploy | [Nitro](https://nitro.build/) `vercel` preset → `.vercel/output/` (serverless `__server` + ISR `/`) |
 
 ---
 
@@ -109,8 +109,8 @@ npm run dev      # http://localhost:3000
 ```
 
 ```bash
-npm run build    # SSR build + prerender `/`
-npm run start    # prod: srvx --prod --dir . --entry ./dist/server/server.js --static ./dist/client
+npm run build    # SSR + prerender `/` + Nitro Vercel output (`.vercel/output/`)
+npm run start    # preview prod build locally (vite preview)
 npm run preview  # preview production build
 ```
 
@@ -234,11 +234,27 @@ atomiq-landing/
 
 ```bash
 npm run dev    # develop
-npm run build  # type-safe + SSR + prerender check
-npm run start  # serve prod locally
+npm run build  # SSR + prerender + Nitro Vercel output
+npm run start  # preview prod build locally
 ```
 
-No test runner is configured yet. Typecheck via `tsc --noEmit` if needed.
+No test runner is configured yet. Typecheck via `npx tsc --noEmit` if needed.
+
+---
+
+## ▲ Deploy to Vercel
+
+This project uses the [Nitro](https://nitro.build/) `vercel` preset (see `nitro.config.ts` + `vercel.json`). `npm run build` emits `.vercel/output/` with a serverless `__server` function, an ISR function for `/` (revalidate 60s), and static assets.
+
+1. Push to GitHub and import the repo in Vercel (framework preset: Vite).
+2. Build command: `npm run build`. No custom output directory needed — Nitro writes `.vercel/output/`.
+3. Set env vars in Vercel → Project → Settings → Environment Variables:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_KEY`
+   - `VITE_APP_URL` (e.g. `https://your-app.vercel.app`)
+4. Deploy. Or via CLI: `npx vercel --prod`.
+
+> The `/` route also sends `Cache-Control: public, max-age=60, s-maxage=60, stale-while-revalidate=300`, and `nitro.config.ts` adds ISR (`isr: 60`) plus long-lived asset caching.
 
 ---
 
