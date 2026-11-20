@@ -10,7 +10,6 @@ export function Team() {
     <section ref={sectionRef} className="team reveal" id="team" aria-label="Meet the team">
       <div className="team-inner">
         <div className="team-head reveal-child">
-          <p className="team-eyebrow">Meet the team</p>
           <h2 className="team-title">
             Behind AtomIQ Are People Who Believe Science Should Be for Everyone.
           </h2>

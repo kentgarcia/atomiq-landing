@@ -1,7 +1,8 @@
 import './FinalCta.css'
-import { PressButton } from '@/components/ui/PressButton/PressButton'
+import { ClassicPressButton } from '@/components/ui/PressButton/ClassicPressButton'
 
 import { footerColumns } from '@/lib/landing'
+import { useReveal } from '@/hooks/useReveal'
 
 type FinalCtaProps = {
   year?: number
@@ -13,6 +14,7 @@ type FinalCtaProps = {
 export function FinalCta({ year, displayedCount, isCountReady, onExcited }: FinalCtaProps) {
   // Year passed from route loader (SSR-safe, same on server/client).
   // Falls back to client year only if loader data is unavailable.
+  const ref = useReveal<HTMLDivElement>(0.2)
   const displayYear = year ?? new Date().getFullYear()
 
   function scrollToTop() {
@@ -20,12 +22,12 @@ export function FinalCta({ year, displayedCount, isCountReady, onExcited }: Fina
   }
 
   return (
-    <div className="final" id="download">
+    <div ref={ref} className="final reveal" id="download">
       <div className="final-rays" aria-hidden="true" />
 
       <section className="final-cta" aria-label="Download AtomIQ">
         <div className="final-inner">
-          <div className="final-counter" role="status" aria-live="polite" aria-busy={!isCountReady}>
+          <div className="final-counter reveal-child" role="status" aria-live="polite" aria-busy={!isCountReady}>
             {isCountReady ? (
               <>
                 <span key={displayedCount} className="final-counter__count final-counter__count--pop">
@@ -41,18 +43,18 @@ export function FinalCta({ year, displayedCount, isCountReady, onExcited }: Fina
             )}
           </div>
 
-          <h2 className="final-title">
+          <h2 className="final-title reveal-child" style={{ ['--i' as string]: 1 } as React.CSSProperties}>
             Think Nuclear Science Is Just What You Know?{' '}
             <span className="final-highlight">Think Again.</span>
           </h2>
-          <p className="final-sub">
+          <p className="final-sub reveal-child" style={{ ['--i' as string]: 2 } as React.CSSProperties}>
             Explore AtomIQ and discover what&rsquo;s really inside the world of the atom.
           </p>
 
-          <div className="final-actions">
-            <PressButton ariaLabel="Atomiq app coming soon" onClick={onExcited}>
+          <div className="final-actions reveal-child" style={{ ['--i' as string]: 3 } as React.CSSProperties}>
+            <ClassicPressButton ariaLabel="Atomiq app coming soon" onClick={onExcited}>
               Coming Soon
-            </PressButton>
+            </ClassicPressButton>
           </div>
         </div>
       </section>

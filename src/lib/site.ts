@@ -4,7 +4,7 @@
  * safe to import anywhere (server or client).
  *
  * Only expose `VITE_`-prefixed env vars here. Secrets live in
- * `env.server.ts` and must never be imported on the client.
+ * server-only files and must never be imported on the client.
  */
 
 export const siteConfig = {

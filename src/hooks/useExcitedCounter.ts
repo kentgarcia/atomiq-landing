@@ -1,142 +1,41 @@
-import { useEffect, useRef, useState } from 'react'
-import { getExcitedCount, incrementExcitedCount } from '@/lib/engagement.functions'
+import { useEffect, useState } from 'react'
 
-const PENDING_KEY = 'atomiq:excited-pending'
-const FLUSH_DELAY_MS = 2000
+const STORAGE_KEY = 'atomiq:excited-total'
+
+/** Where the counter starts: a random number between 700,000 and 950,000. */
+export const COUNT_MIN = 700_000
+export const COUNT_MAX = 950_000
+export const randomStartCount = () => COUNT_MIN + Math.floor(Math.random() * (COUNT_MAX - COUNT_MIN + 1))
 
 /**
- * Shared excited-click counter.
- * `globalCount` is the last server-confirmed value, `localClicks` is the
- * unflushed burst. Display is their sum so the button feels instant while
- * Supabase sees one RPC per burst.
+ * Shared excited-click counter (no backend). It starts at `initialCount` (generated once by the route loader, so server
+ * and client render the same number) and every click adds one. A returning visitor keeps their own running total in
+ * localStorage, so the number never goes back down on refresh. Hero and final call-to-action read this one value.
  */
-export function useExcitedCounter(initialCount = 0) {
-  const [globalCount, setGlobalCount] = useState(initialCount)
-  const [localClicks, setLocalClicks] = useState(0)
-  const [isCountReady, setIsCountReady] = useState(initialCount > 0)
-  const pendingRef = useRef(0)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const flushingRef = useRef(false)
+export function useExcitedCounter(initialCount: number) {
+  const [count, setCount] = useState(initialCount)
 
-  const displayedCount = globalCount + localClicks
-
-  async function flushClicks() {
-    if (flushingRef.current) return
-    const amount = pendingRef.current
-    if (amount <= 0) return
-    flushingRef.current = true
-    try {
-      const { count } = await incrementExcitedCount({ data: { delta: amount } })
-      pendingRef.current = 0
-      setLocalClicks(0)
-      setGlobalCount(count)
-      try {
-        localStorage.removeItem(PENDING_KEY)
-      } catch {
-        /* storage unavailable — ignore */
-      }
-    } catch {
-      // Keep pending for retry — server stays source of truth.
-      try {
-        localStorage.setItem(PENDING_KEY, String(pendingRef.current))
-      } catch {
-        /* storage unavailable — ignore */
-      }
-    } finally {
-      flushingRef.current = false
-    }
-  }
-
-  const flushRef = useRef(flushClicks)
-  flushRef.current = flushClicks
-
-  function scheduleFlush() {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => {
-      void flushRef.current()
-    }, FLUSH_DELAY_MS)
-  }
-
-  // Restore pending clicks across refresh/close + fetch fresh global
-  // count (SSR/prerender bakes a stale loader value) + flush on tab hide.
   useEffect(() => {
-    // Fresh global count — deferred past the hero entrance (~1.3s) via
-    // idle time so the network + re-render never contends with the
-    // entrance animations and cause visible jank.
-    const fetchFresh = () => {
-      void getExcitedCount()
-        .then(({ count }) => {
-          setGlobalCount((prev) => Math.max(prev, count))
-          setIsCountReady(true)
-        })
-        .catch(() => {
-          /* keep loader value on failure */
-          setIsCountReady(true)
-        })
-    }
-    let idleId = 0
-    let fallbackId: ReturnType<typeof setTimeout> | null = null
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      idleId = window.requestIdleCallback(fetchFresh, { timeout: 2500 })
-    } else {
-      fallbackId = setTimeout(fetchFresh, 1500)
-    }
     try {
-      const saved = Number(localStorage.getItem(PENDING_KEY) ?? '0')
-      if (Number.isFinite(saved) && saved > 0) {
-        const clamped = Math.min(Math.floor(saved), 1000)
-        pendingRef.current = clamped
-        setLocalClicks(clamped)
-        scheduleFlush()
-      }
+      const saved = Number(localStorage.getItem(STORAGE_KEY))
+      if (Number.isFinite(saved) && saved >= COUNT_MIN) setCount(saved)
+      else localStorage.setItem(STORAGE_KEY, String(initialCount))
     } catch {
-      /* storage unavailable — ignore */
-    }
-    const onBeforeUnload = () => {
-      try {
-        localStorage.setItem(PENDING_KEY, String(pendingRef.current))
-      } catch {
-        /* ignore */
-      }
-    }
-    const onVisibilityChange = () => {
-      if (document.visibilityState === 'hidden' && pendingRef.current > 0) {
-        void flushRef.current()
-      }
-    }
-    window.addEventListener('beforeunload', onBeforeUnload)
-    document.addEventListener('visibilitychange', onVisibilityChange)
-    return () => {
-      window.removeEventListener('beforeunload', onBeforeUnload)
-      document.removeEventListener('visibilitychange', onVisibilityChange)
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
-      if (idleId && 'cancelIdleCallback' in window) {
-        window.cancelIdleCallback(idleId)
-      }
-      if (fallbackId) clearTimeout(fallbackId)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // Keep SSR loader value in sync if the route revalidates.
-  useEffect(() => {
-    if (initialCount > 0) {
-      setGlobalCount((prev) => Math.max(prev, initialCount))
-      setIsCountReady(true)
+      /* storage unavailable: keep the loader value */
     }
   }, [initialCount])
 
   function handleExcited() {
-    // Instant local increment; debounce the network flush.
-    pendingRef.current += 1
-    setLocalClicks(pendingRef.current)
-    try {
-      localStorage.setItem(PENDING_KEY, String(pendingRef.current))
-    } catch {
-      /* storage unavailable — ignore */
-    }
-    scheduleFlush()
+    setCount((c) => {
+      const next = c + 1
+      try {
+        localStorage.setItem(STORAGE_KEY, String(next))
+      } catch {
+        /* ignore */
+      }
+      return next
+    })
   }
 
-  return { displayedCount, isCountReady, handleExcited }
+  return { displayedCount: count, isCountReady: true, handleExcited }
 }

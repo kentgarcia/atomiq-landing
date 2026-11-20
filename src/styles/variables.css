@@ -1,8 +1,60 @@
+/* Design tokens — mirrored from the AtomIQ app (theme/tokens.ts, light mode).
+   White pages, neutral 2 px borders, chunky 4 px "lips" under every control,
+   one yellow brand button, and one colour per unit. */
 :root {
-  --brand: #ff9600;
-  --brand-dark: #e08600;
-  --ink: #4b4b4b;
-  --muted: #777777;
-  --card-border: #e5e5e5;
-  --card-hover: #fff4e5;
+  /* surfaces + text */
+  --bg: #ffffff;
+  --soft: #f7f7f7;
+  --field: #f1f5f9;
+  --ink: #3c3c3c;
+  --ink-2: #5c5c5c;
+  --muted: #737373;
+  --faint: #9a9a9a;
+  --line: #e5e5e5;
+  --line-strong: #cfcfcf;
+
+  /* brand yellow: the primary button and the lesson card */
+  --button: #f9b71f;
+  --button-lip: #d9981a;
+  --yellow: #fabf24;
+  --yellow-lip: #d9981a;
+  --yellow-soft: #feefc8;
+  --yellow-ink: #7a5a0e;
+
+  /* unit palette (face / lip) */
+  --blue: #1cb0f6;
+  --blue-lip: #1899d6;
+  --blue-soft: #ddf4ff;
+  --u-blue: #1899d6;
+  --u-blue-lip: #1479ab;
+  --green: #58cc02;
+  --green-lip: #46a302;
+  --green-soft: #e5f8d0;
+  --u-green: #46a302;
+  --u-green-lip: #378300;
+  --purple: #7f5ac2;
+  --purple-lip: #5f42a0;
+  --purple-soft: #ece4fa;
+  --red: #ff4b4b;
+  --red-lip: #d93b3b;
+  --red-soft: #ffe3e3;
+  --u-red: #ef4444;
+  --u-red-lip: #dc2626;
+  --orange: #ff9600;
+  --orange-lip: #da7c00;
+
+  /* the app's yellow button, used by the navbar */
+  --brand: #f9b71f;
+  --brand-dark: #d9981a;
+
+  /* anatomy of a chunky control */
+  --lip: 4px;
+  --border: 2px;
+  --r-card: 20px;
+  --r-ctl: 16px;
+
+  /* motion: interface moves stay under 300 ms and ease out */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --settle: 220ms;
+  --pop-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
 }

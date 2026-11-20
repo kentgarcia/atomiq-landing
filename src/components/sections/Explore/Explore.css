@@ -1,377 +1,396 @@
-/* Explore — "AtomIQ universe": mascot core with 4 floating feature cards. */
+/* A bento of 3D cards: a coloured stage on top, the words below. */
 
-.explore {
-  position: relative;
-  overflow: hidden;
-  background: #ffffff;
-  padding: 96px 20px;
-}
-
-.explore-stars {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(circle, rgba(255, 138, 26, 0.35) 1.6px, transparent 2.2px),
-    radial-gradient(circle, rgba(59, 155, 233, 0.3) 1.3px, transparent 1.9px);
-  background-size:
-    34px 34px,
-    26px 26px;
-  background-position:
-    0 0,
-    13px 13px;
-  -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 0%, #000 55%, transparent 85%);
-  mask-image: radial-gradient(circle at 50% 45%, #000 0%, #000 55%, transparent 85%);
-}
-
-.explore-orbit {
-  position: absolute;
-  left: 50%;
-  top: 56%;
-  border: 2px dashed rgba(17, 17, 17, 0.08);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.explore-orbit--1 {
-  width: min(880px, 130vw);
-  aspect-ratio: 1.6 / 1;
-  transform: translate(-50%, -50%) rotate(-6deg);
-}
-
-.explore-orbit--2 {
-  width: min(1120px, 160vw);
-  aspect-ratio: 1.7 / 1;
-  transform: translate(-50%, -50%) rotate(4deg);
-}
-
-.explore-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 1120px;
-  margin: 0 auto;
-}
-
-.explore-head {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.explore-eyebrow {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  line-height: 1;
-  color: #52525b;
-  background: #ffffff;
-  border: 2px solid #e5e5e5;
-  border-radius: 999px;
-  padding: 9px 16px;
-  box-shadow: 0 3px 0 #e5e5e5;
-}
-
-.explore-title {
-  margin: 18px 0 0;
-  font-size: clamp(2rem, 4.5vw, 2.9rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  font-weight: 800;
-  color: #111;
-}
-
-.explore-highlight {
-  display: inline-block;
-  background: #3b9be9;
-  color: #fff;
-  padding: 0 14px 4px;
-  border-radius: 14px;
-  transform: rotate(1deg);
-}
-
-.explore-sub {
-  margin: 14px auto 0;
-  max-width: 46ch;
-  font-size: 0.98rem;
-  line-height: 1.6;
-  color: #4b4b4b;
-}
-
-.explore-universe {
-  margin-top: 56px;
+.xp-grid {
   display: grid;
-  grid-template-columns: 1fr 1.15fr 1fr;
-  gap: 20px;
-  align-items: center;
-}
-
-.explore-column {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
 }
 
-.explore-card {
-  background: #fff;
-  border: 2px solid #e5e5e5;
-  border-radius: 24px;
-  box-shadow: 0 4px 0 #e5e5e5;
-  padding: 22px 20px;
-  animation: explore-float 7s ease-in-out infinite;
-}
-
-.explore-float--1 { animation-delay: -1s; }
-.explore-float--2 { animation-delay: -3.5s; }
-.explore-float--3 { animation-delay: -2s; }
-.explore-float--4 { animation-delay: -5s; }
-
-@keyframes explore-float {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -7px; }
-}
-
-.explore-card__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 15px;
-  margin-bottom: 14px;
-}
-
-.explore-card__icon svg {
-  width: 27px;
-  height: 27px;
-}
-
-.explore-card--orange .explore-card__icon {
-  background: #fff1de;
-  color: #ff8a1a;
-}
-
-.explore-card--red .explore-card__icon {
-  background: #fdecec;
-  color: #e85d5d;
-}
-
-.explore-card--blue .explore-card__icon {
-  background: #e8f3fd;
-  color: #3b9be9;
-}
-
-.explore-card--purple .explore-card__icon {
-  background: #f1eafd;
-  color: #8b5cf6;
-}
-
-.explore-card__title {
-  margin: 0;
-  font-size: 1.08rem;
-  font-weight: 800;
-  color: #111;
-}
-
-.explore-card__text {
-  margin: 8px 0 0;
-  font-size: 0.92rem;
-  line-height: 1.55;
-  color: #777777;
-}
-
-/* Core — Shrodi spotlight with orbiting electrons */
-.explore-core {
-  position: relative;
+.xp-card {
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  border-radius: 36px;
-  background:
-    radial-gradient(circle at 50% 22%, rgba(255, 138, 26, 0.16), transparent 62%),
-    #fbfbfb;
-  border: 2px solid #e5e5e5;
-  box-shadow: 0 6px 0 #e5e5e5;
-  padding: 30px 24px 26px;
   overflow: hidden;
-  scroll-margin-top: 110px;
+  background: #fff;
+  border: var(--border) solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 var(--lip) 0 var(--line);
+  transition:
+    transform 160ms var(--ease-out),
+    box-shadow 160ms var(--ease-out);
 }
 
-.explore-core__glow {
-  position: absolute;
-  left: 50%;
-  top: 26%;
-  width: min(380px, 80%);
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(255, 150, 0, 0.22), transparent 65%);
+.xp-card--lessons,
+.xp-card--myth {
+  grid-column: span 3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .xp-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 calc(var(--lip) + 4px) 0 var(--line);
+  }
+}
+
+.xp-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 210px;
+  overflow: hidden;
+}
+
+.xp-stage--yellow { background: var(--yellow-soft); }
+.xp-stage--red { background: var(--red-soft); }
+.xp-stage--sky { background: #c7ecff; }
+.xp-stage--purple { background: var(--purple-soft); }
+.xp-stage--pink { background: #ffdfe0; }
+
+.xp-body {
+  padding: 18px 22px 22px;
+}
+
+.xp-body h3 {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+}
+
+.xp-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  font-size: 0.98rem;
+}
+
+/* ---------- lessons: the cast ---------- */
+
+.xp-teachers {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0;
+  padding: 0 12px;
+  list-style: none;
+}
+
+.xp-teachers li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  margin-left: -12px;
+  transition: transform 180ms var(--ease-out);
+}
+
+.xp-teachers li:first-child {
+  margin-left: 0;
+}
+
+.xp-teacher {
+  display: block;
+  width: clamp(56px, 9vw, 84px);
+  aspect-ratio: 1;
   border-radius: 50%;
-  pointer-events: none;
-}
-
-.explore-core__ring {
-  position: absolute;
-  left: 50%;
-  top: 26%;
-  border: 2px solid rgba(17, 17, 17, 0.1);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.explore-core__ring--1 {
-  width: min(340px, 78%);
-  aspect-ratio: 1.35 / 1;
-  transform: translate(-50%, -50%) rotate(-12deg);
-  animation: ring-spin 14s linear infinite;
-}
-
-.explore-core__ring--2 {
-  width: min(420px, 94%);
-  aspect-ratio: 1.45 / 1;
-  transform: translate(-50%, -50%) rotate(10deg);
-  animation: ring-spin 20s linear infinite reverse;
-}
-
-@keyframes ring-spin {
-  from { rotate: 0deg; }
-  to { rotate: 360deg; }
-}
-
-.explore-core__electron {
-  position: absolute;
-  left: -7px;
-  top: 50%;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #ff8a1a;
+  background: color-mix(in srgb, var(--c) 28%, #fff);
   border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(255, 138, 26, 0.5);
+  overflow: hidden;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--c) 55%, #fff);
 }
 
-.explore-core__ring--2 .explore-core__electron {
-  background: #3b9be9;
-  box-shadow: 0 2px 8px rgba(59, 155, 233, 0.5);
+.xp-teacher svg {
+  width: 100%;
+  height: 100%;
+  transform: translateY(8%) scale(1.05);
 }
 
-.explore-core__mascot {
-  position: relative;
-  z-index: 1;
-  width: min(200px, 52%);
-  height: auto;
-  margin-top: 12px;
-  animation: explore-float 5.5s ease-in-out infinite;
-}
-
-.explore-core__badge {
-  position: relative;
-  z-index: 1;
-  font-size: 0.75rem;
+.xp-teachers em {
+  margin-top: 8px;
+  font-style: normal;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  color: var(--yellow-ink);
+}
+
+.xp-teachers li:nth-child(odd) {
+  translate: 0 -10px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .xp-teachers li:hover {
+    transform: translateY(-8px) scale(1.06);
+    z-index: 2;
+  }
+}
+
+.reveal.is-visible .xp-teachers li {
+  animation: pop-in 0.36s var(--ease-out) backwards;
+  animation-delay: calc(0.35s + var(--k) * 70ms);
+}
+
+/* ---------- myth smashers ---------- */
+
+.xp-myth {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.xp-myth__obj {
+  width: 86px;
+  height: 86px;
+  animation: bob 5s ease-in-out infinite;
+  --bob: -6px;
+}
+
+.xp-myth__row {
+  display: flex;
+  gap: 14px;
+}
+
+.xp-chip {
+  --f: var(--red);
+  --l: var(--red-lip);
+  min-width: 108px;
+  height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--f);
+  box-shadow: 0 4px 0 var(--l);
   color: #fff;
-  background: #111;
-  border-radius: 999px;
-  padding: 7px 16px;
-}
-
-.explore-core__title {
-  position: relative;
-  z-index: 1;
-  margin: 16px 0 0;
-  font-size: 1.35rem;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  font-weight: 800;
-  color: #111;
-  text-align: center;
-  text-wrap: balance;
-}
-
-.explore-core__text {
-  position: relative;
-  z-index: 1;
-  margin: 8px 0 0;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: #4b4b4b;
-  text-align: center;
-  max-width: 36ch;
-}
-
-.explore-core__cta {
-  position: relative;
-  z-index: 1;
-  margin-top: 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 26px;
-  border: none;
-  border-radius: 999px;
-  background: #ff9600;
-  color: #fff;
-  text-decoration: none;
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-weight: 900;
+  font-size: 0.98rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  text-shadow: 0 2px 0 var(--l);
   cursor: pointer;
-  box-shadow: 0 4px 0 #b96a00;
-  transition:
-    transform 100ms cubic-bezier(0.23, 1, 0.32, 1),
-    box-shadow 100ms cubic-bezier(0.23, 1, 0.32, 1),
-    filter 150ms ease;
+  transition: box-shadow 110ms var(--ease-out), transform 110ms var(--ease-out);
 }
-
-.explore-core__cta:hover {
-  filter: brightness(1.05);
+.xp-chip--green {
+  --f: var(--green);
+  --l: var(--green-lip);
 }
-
-.explore-core__cta:active {
+.xp-chip:active {
   transform: translateY(4px);
-  box-shadow: 0 0 0 #b96a00;
+  box-shadow: 0 0 0 var(--l);
+}
+.xp-chip.is-popped {
+  animation: pop 0.7s var(--ease-out);
+}
+.xp-chip:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
 }
 
-@media (max-width: 960px) {
-  .explore-universe {
-    grid-template-columns: 1fr 1fr;
-  }
+/* ---------- atom maze: a still from the game ---------- */
 
-  .explore-core {
-    grid-column: 1 / -1;
-    order: -1;
+.xp-maze {
+  display: block;
+  background: #c3e3ff;
+}
+
+.xp-maze__ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  display: flex;
+  overflow: hidden;
+  background: #8b5a2b;
+}
+
+.xp-maze__ground img {
+  flex: none;
+  width: 56px;
+  height: 56px;
+}
+
+/* Shrodi's own sprite sheet, idle clip only: 24 frames at 10 fps, a frame at a time */
+.xp-maze__hero {
+  position: absolute;
+  left: 20%;
+  bottom: 52px;
+  width: 112px;
+  height: 112px;
+  background: url('/images/maze/shrodi_sheet.png') 0 0 / 800% 800% no-repeat;
+  animation: shrodi-idle 2.4s steps(1, end) infinite;
+}
+
+.xp-maze__bug {
+  position: absolute;
+  right: 22%;
+  bottom: 56px;
+  width: 48px;
+}
+
+.xp-maze__coin {
+  position: absolute;
+  width: 30px;
+  animation: bob 2.6s ease-in-out infinite;
+  --bob: -6px;
+}
+.xp-maze__coin--1 { left: 46%; top: 40%; }
+.xp-maze__coin--2 { left: 55%; top: 30%; animation-delay: -0.6s; }
+
+.xp-maze__gem {
+  position: absolute;
+  left: 70%;
+  top: 24%;
+  width: 30px;
+  animation: bob 3s ease-in-out infinite -1s;
+  --bob: -5px;
+}
+
+.xp-maze__flag {
+  position: absolute;
+  right: 6%;
+  bottom: 56px;
+  width: 52px;
+}
+
+@keyframes shrodi-idle {
+  0.0000% { background-position: 0.0000% 0.0000%; }
+  4.1667% { background-position: 14.2857% 0.0000%; }
+  8.3333% { background-position: 28.5714% 0.0000%; }
+  12.5000% { background-position: 42.8571% 0.0000%; }
+  16.6667% { background-position: 57.1429% 0.0000%; }
+  20.8333% { background-position: 71.4286% 0.0000%; }
+  25.0000% { background-position: 85.7143% 0.0000%; }
+  29.1667% { background-position: 100.0000% 0.0000%; }
+  33.3333% { background-position: 0.0000% 14.2857%; }
+  37.5000% { background-position: 14.2857% 14.2857%; }
+  41.6667% { background-position: 28.5714% 14.2857%; }
+  45.8333% { background-position: 42.8571% 14.2857%; }
+  50.0000% { background-position: 57.1429% 14.2857%; }
+  54.1667% { background-position: 71.4286% 14.2857%; }
+  58.3333% { background-position: 85.7143% 14.2857%; }
+  62.5000% { background-position: 100.0000% 14.2857%; }
+  66.6667% { background-position: 0.0000% 28.5714%; }
+  70.8333% { background-position: 14.2857% 28.5714%; }
+  75.0000% { background-position: 28.5714% 28.5714%; }
+  79.1667% { background-position: 42.8571% 28.5714%; }
+  83.3333% { background-position: 57.1429% 28.5714%; }
+  87.5000% { background-position: 71.4286% 28.5714%; }
+  91.6667% { background-position: 85.7143% 28.5714%; }
+  95.8333% { background-position: 100.0000% 28.5714%; }
+}
+
+/* ---------- atomdex ---------- */
+
+.xp-dex__icon {
+  width: 96px;
+  height: auto;
+  animation: bob 5s ease-in-out infinite;
+  --bob: -6px;
+}
+
+.xp-dex__chips {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.xp-dex__chips li {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: #fff;
+  border: 2px solid var(--purple-soft);
+  box-shadow: 0 3px 0 #d6c8f1;
+  color: var(--purple-lip);
+  font-size: 0.8rem;
+  font-weight: 800;
+  animation: bob 5s ease-in-out infinite;
+  --bob: -5px;
+}
+.xp-dex__chips li:nth-child(1) { left: 8%; top: 20%; }
+.xp-dex__chips li:nth-child(2) { right: 8%; top: 32%; animation-delay: -1.5s; }
+.xp-dex__chips li:nth-child(3) { left: 14%; bottom: 16%; animation-delay: -3s; }
+
+/* ---------- avatars + shop ---------- */
+
+.xp-avatars {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.xp-avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+.xp-avatar--1 {
+  rotate: -5deg;
+}
+.xp-avatar--2 {
+  rotate: 4deg;
+  translate: 0 -8px;
+}
+
+.xp-price {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px 5px 7px;
+  border-radius: 99px;
+  background: #fff;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+  color: var(--blue-lip);
+  font-weight: 900;
+}
+.xp-price svg {
+  width: 22px;
+  height: 22px;
+}
+
+@media (max-width: 900px) {
+  .xp-card,
+  .xp-card--lessons,
+  .xp-card--myth {
+    grid-column: span 3;
+  }
+  .xp-card--shop {
+    grid-column: span 6;
   }
 }
 
 @media (max-width: 620px) {
-  .explore {
-    padding: 64px 16px 80px;
+  .xp-card,
+  .xp-card--lessons,
+  .xp-card--myth,
+  .xp-card--shop {
+    grid-column: span 6;
   }
-
-  .explore-universe {
-    grid-template-columns: 1fr;
-    margin-top: 40px;
+  .xp-teacher {
+    width: 44px;
   }
-
-  .explore-core__title {
-    font-size: 1.2rem;
+  .xp-teachers li {
+    margin-left: -8px;
+  }
+  .xp-teachers em {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .explore-card,
-  .explore-core__mascot,
-  .explore-core__ring--1,
-  .explore-core__ring--2 {
-    animation: none;
+  .xp-card,
+  .xp-teachers li,
+  .xp-myth__obj,
+  .xp-maze__hero,
+  .xp-maze__coin,
+  .xp-maze__gem,
+  .xp-dex__icon,
+  .xp-dex__chips li {
+    animation: none !important;
+    transition: none;
   }
 }

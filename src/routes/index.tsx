@@ -2,27 +2,19 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Hero } from '@/components/sections/Hero/Hero'
 import { Introduction } from '@/components/sections/Introduction/Introduction'
 import { Explore } from '@/components/sections/Explore/Explore'
+import { ShrodiChat } from '@/components/sections/ShrodiChat/ShrodiChat'
 import { Challenge } from '@/components/sections/Challenge/Challenge'
 import { Journey } from '@/components/sections/Journey/Journey'
 import { Team } from '@/components/sections/Team/Team'
 import { Faq } from '@/components/sections/Faq/Faq'
 import { FinalCta } from '@/components/layout/FinalCta/FinalCta'
-import { useExcitedCounter } from '@/hooks/useExcitedCounter'
-import { getExcitedCount } from '@/lib/engagement.functions'
+import { randomStartCount, useExcitedCounter } from '@/hooks/useExcitedCounter'
 
 export const Route = createFileRoute('/')({
   // Full SSR (default) — landing page is SEO-critical (`ssr-selective`: keep `true`).
-  // Loader runs on the server during SSR via a GET server function
-  // (`ssr-data-loading`: never touch server resources directly in loaders).
-  loader: async () => {
-    try {
-      const { count } = await getExcitedCount()
-      return { excitedCount: count, year: new Date().getFullYear() }
-    } catch {
-      // Graceful fallback — never break SSR for a counter (`sf-error-handling`).
-      return { excitedCount: 0, year: new Date().getFullYear() }
-    }
-  },
+  // The counter has no backend: the loader picks its starting point (700,000–950,000) once,
+  // and the value is serialized so server and client render the same number.
+  loader: () => ({ excitedCount: randomStartCount(), year: new Date().getFullYear() }),
   // ISR: cache the prerendered landing at the CDN for 60s, serve stale
   // while revalidating for 5min (`ssr-prerender`). Count stays fresh
   // enough for a marketing page without SSR-ing every request.
@@ -56,10 +48,12 @@ function Home() {
   const { excitedCount, year } = Route.useLoaderData()
   const { displayedCount, isCountReady, handleExcited } = useExcitedCounter(excitedCount)
   return (
-    <main style={{ margin: 0, background: '#ffffff' }}>
+    <main style={{ margin: 0, background: 'var(--bg)' }}>
+      <div className="scroll-progress" aria-hidden="true" />
       <Hero displayedCount={displayedCount} isCountReady={isCountReady} onExcited={handleExcited} />
       <Introduction />
       <Explore />
+      <ShrodiChat />
       <Challenge />
       <Journey />
       <Team />

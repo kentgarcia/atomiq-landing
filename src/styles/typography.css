@@ -1,48 +1,22 @@
-/* Typography — SunghyunSans + base font stack. */
+/* Typography — Intern (the app's own variable font, wght 100–900). */
 
 @font-face {
-  font-family: 'SunghyunSans';
-  src: url('/fonts/SunghyunSans-Web/SunghyunSans-Regular.woff2') format('woff2');
-  font-weight: 400;
+  font-family: 'Intern';
+  src: url('/fonts/Intern-Variable.woff2') format('woff2');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'SunghyunSans';
-  src: url('/fonts/SunghyunSans-Web/SunghyunSans-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SunghyunSans';
-  src: url('/fonts/SunghyunSans-Web/SunghyunSans-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SunghyunSans';
-  src: url('/fonts/SunghyunSans-Web/SunghyunSans-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'SunghyunSans';
-  src: url('/fonts/SunghyunSans-Web/SunghyunSans-ExtraBold.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
+@font-face { font-family: 'SunghyunSans'; src: url('/fonts/SunghyunSans-Web/SunghyunSans-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'SunghyunSans'; src: url('/fonts/SunghyunSans-Web/SunghyunSans-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'SunghyunSans'; src: url('/fonts/SunghyunSans-Web/SunghyunSans-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'SunghyunSans'; src: url('/fonts/SunghyunSans-Web/SunghyunSans-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'SunghyunSans'; src: url('/fonts/SunghyunSans-Web/SunghyunSans-ExtraBold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
 
 body {
   font-family:
-    'SunghyunSans',
+    'Intern',
     ui-rounded,
     ui-sans-serif,
     system-ui,
@@ -52,8 +26,17 @@ body {
     Helvetica,
     Arial,
     sans-serif;
-  background: #ffffff;
+  background: var(--bg);
   color: var(--ink);
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }

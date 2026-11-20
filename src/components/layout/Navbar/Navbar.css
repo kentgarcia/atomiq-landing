@@ -1,6 +1,7 @@
 /* Floating navbar — orange Duolingo-style rounded pill card: white, chunky border, flat, playful. */
 
 .nav-float {
+  font-family: 'SunghyunSans', ui-rounded, ui-sans-serif, system-ui, sans-serif;
   position: fixed;
   top: 12px;
   left: 0;
@@ -31,6 +32,7 @@
   border: 2px solid #e5e5e5;
   border-radius: 999px;
   box-shadow: 0 4px 0 #e5e5e5;
+  animation: nav-drop 520ms var(--ease-out) 120ms backwards;
 }
 
 .nav-brand {
@@ -38,6 +40,14 @@
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
+}
+
+.nav-brand__name {
+  margin-left: 10px;
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #111;
 }
 
 .nav-brand__logo {
@@ -244,6 +254,10 @@
 }
 
 @media (max-width: 420px) {
+  .nav-brand__name {
+    display: none;
+  }
+
   .nav-cta {
     padding: 10px 16px;
   }

@@ -1,6 +1,7 @@
 import './Hero.css'
-import { PressButton } from '@/components/ui/PressButton/PressButton'
-import { heroFlags } from '@/lib/landing'
+import { ClassicPressButton } from '@/components/ui/PressButton/ClassicPressButton'
+import { objectUri } from '@/components/art/Art'
+import { heroObjects } from '@/lib/landing'
 
 type HeroProps = {
   displayedCount: number
@@ -13,9 +14,9 @@ export function Hero({ displayedCount, isCountReady, onExcited }: HeroProps) {
     <section className="hero" aria-label="Intro">
       <div className="hero-rays" aria-hidden="true" />
 
-      {heroFlags.map((flag) => (
-        <div key={flag.label} className={`hero-flag ${flag.className}`} aria-hidden="true">
-          <img src={flag.src} alt="" width={96} height={96} loading="eager" decoding="async" />
+      {heroObjects.map((o, i) => (
+        <div key={o.id} className={`hero-flag prop-${i + 1}`} aria-hidden="true">
+          <img src={objectUri(o.id) ?? ''} alt="" width={100} height={100} decoding="async" draggable={false} />
         </div>
       ))}
 
@@ -46,12 +47,12 @@ export function Hero({ displayedCount, isCountReady, onExcited }: HeroProps) {
         </p>
 
         <div className="hero-cta">
-          <PressButton
+          <ClassicPressButton
             ariaLabel="Atomiq app coming soon"
             onClick={onExcited}
           >
             Coming Soon
-          </PressButton>
+          </ClassicPressButton>
         </div>
 
         <div className="hero-mascot-wrap">

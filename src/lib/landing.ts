@@ -7,22 +7,17 @@
  * large arrays inline, keeping route/component files focused.
  */
 
-export interface HeroFlag {
-  src: string
-  label: string
-  className: string
-}
-
-export const heroFlags: HeroFlag[] = [
-  { src: '/images/baby-alien.svg', label: 'Baby alien', className: 'prop-1' },
-  { src: '/images/control-panel.svg', label: 'Control panel', className: 'prop-2' },
-  { src: '/images/hologram-monitor.svg', label: 'Hologram monitor', className: 'prop-3' },
-  { src: '/images/solar-panel.svg', label: 'Solar panel', className: 'prop-4' },
-  { src: '/images/energy-cell.svg', label: 'Energy cell', className: 'prop-5' },
-  { src: '/images/energy-link.svg', label: 'Energy link', className: 'prop-6' },
-  { src: '/images/barricade-pillar.svg', label: 'Barricade pillar', className: 'prop-7' },
-  { src: '/images/space-base.svg', label: 'Space base', className: 'prop-8' },
-]
+/** Lesson pictures that drift round Shrodi in the hero (ids of the app's own object art). */
+export const heroObjects = [
+  { id: 'atom', tilt: -8 },
+  { id: 'tower', tilt: 6 },
+  { id: 'banana', tilt: -14 },
+  { id: 'barrel', tilt: 8 },
+  { id: 'sun', tilt: -6 },
+  { id: 'geiger', tilt: 12 },
+  { id: 'radiation', tilt: 10 },
+  { id: 'ore', tilt: -10 },
+] as const
 
 export interface FaqItem {
   question: string
@@ -48,7 +43,7 @@ export const faqs: FaqItem[] = [
   {
     question: 'Who is Shrodi?',
     answer:
-      'Shrodi is your learning companion inside AtomIQ — guiding each lesson, cheering your progress, and making nuclear science feel friendly and playful.',
+      'Shrodi is the lab-coat fox who keeps you company inside AtomIQ: showing you around the app, chatting on your in-app phone, and cheering when you get things right.',
   },
   {
     question: 'When will AtomIQ be available?',

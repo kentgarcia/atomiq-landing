@@ -9,6 +9,11 @@
   text-align: center;
   min-height: 100svh;
   z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'SunghyunSans', ui-rounded, ui-sans-serif, system-ui, sans-serif;
 }
 
 .hero-rays {
@@ -105,7 +110,7 @@
   font-variant-numeric: tabular-nums;
   font-weight: 800;
   color: #111;
-  background: #fff3e6;
+  background: var(--yellow-soft);
   border-radius: 8px;
   padding: 0 6px;
 }
@@ -195,7 +200,7 @@
   margin-left: 0;
 }
 
-.hero-badge__avatar--1 { background: #ff9f2e; }
+.hero-badge__avatar--1 { background: var(--yellow); }
 .hero-badge__avatar--2 { background: #3b9be9; }
 .hero-badge__avatar--3 { background: #7a7a7a; }
 
@@ -210,7 +215,8 @@
 
 .hero-highlight {
   display: inline-block;
-  background: #ff8a1a;
+  background: var(--yellow);
+  box-shadow: 0 4px 0 var(--yellow-lip);
   color: #fff;
   padding: 0 14px 4px;
   border-radius: 14px;
@@ -231,12 +237,12 @@
   justify-content: center;
 }
 
-.hero-cta .press-btn {
-  width: min(210px, 62vw);
+.hero-cta .classic-btn {
+  width: min(168px, 56vw);
 }
 
-.hero-cta .press-btn__label {
-  font-size: 1.05rem;
+.hero-cta .classic-btn__label {
+  font-size: 0.95rem;
 }
 
 /* Floating SVG props — entrance blasts out from center, idle floats on the img.
@@ -258,7 +264,10 @@
   width: 100%;
   height: auto;
   display: block;
-  opacity: 0.94;
+  pointer-events: none;
+  /* its own compositor layer: the idle float only moves a cached picture */
+  will-change: transform;
+  backface-visibility: hidden;
   animation: hero-float 7s ease-in-out infinite;
   animation-delay: 1.6s;
 }
@@ -286,6 +295,29 @@
     opacity: 1;
     transform: translate(0, 0) scale(1);
   }
+}
+
+/* props drift at their own speeds as the page scrolls away (scroll-driven, runs off the main thread) */
+@keyframes hero-par {
+  to { translate: 0 var(--par, -40px); }
+}
+
+@supports (animation-timeline: scroll()) {
+  .hero-flag {
+    animation:
+      prop-blast 0.7s cubic-bezier(0.22, 0.9, 0.28, 1) var(--d, 0.3s) forwards,
+      hero-par linear both;
+    animation-timeline: auto, scroll(root);
+    animation-range: normal, 0 100vh;
+  }
+  .prop-1 { --par: -90px; }
+  .prop-2 { --par: -40px; }
+  .prop-3 { --par: -120px; }
+  .prop-4 { --par: -60px; }
+  .prop-5 { --par: -100px; }
+  .prop-6 { --par: -50px; }
+  .prop-7 { --par: -80px; }
+  .prop-8 { --par: -130px; }
 }
 
 @keyframes hero-float {
@@ -354,6 +386,7 @@
   .hero-flag {
     opacity: 1;
     transform: none;
+    animation: none;
   }
   .hero-mascot-wrap {
     opacity: 1;

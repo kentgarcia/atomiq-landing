@@ -1,175 +1,127 @@
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import './Explore.css'
-import { ShrodiModal } from './ShrodiModal'
+import { useReveal } from '@/hooks/useReveal'
+import { AppIcon, Avatar, Obj, Teacher } from '@/components/art/Art'
+import { TEACHERS } from '@/art/generated'
 
-const features = [
-  {
-    key: 'lessons',
-    title: 'Interactive Lessons',
-    text: 'Break down nuclear science concepts into easy-to-follow learning units.',
-    accent: 'orange' as const,
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5V5.5Z"
-          fill="currentColor"
-          opacity="0.18"
-        />
-        <path
-          d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5A2.5 2.5 0 0 1 4 20.5ZM6.5 3A2.5 2.5 0 0 0 4 5.5V20.5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <path d="M8 7.5h8M8 11h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    key: 'myths',
-    title: 'Myth Smashers',
-    text: 'Challenge common misconceptions and find out what the science really says.',
-    accent: 'red' as const,
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="m13.5 4.5 6 6L11 19l-6-6 8.5-8.5Z"
-          fill="currentColor"
-          opacity="0.18"
-        />
-        <path
-          d="m13.5 4.5 6 6L11 19l-6-6 8.5-8.5Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M9.5 9.5l5 5M4 20l3.5-3.5M17 4l3-1 1 3-3 1"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    key: 'maze',
-    title: 'Atom Maze',
-    text: 'Learn through an interactive game with progression, challenges, and rewards.',
-    accent: 'blue' as const,
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor" opacity="0.18" />
-        <rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path
-          d="M7 8h4v4H7zM13 12h4v4h-4zM7 14v3M17 7v3M11 8v2M13 8v6"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    ),
-  },
-  {
-    key: 'encyclopedia',
-    title: 'Nuclear Encyclopedia',
-    text: 'Explore concepts, terms, and additional scientific information.',
-    accent: 'purple' as const,
-    icon: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="8.5" fill="currentColor" opacity="0.18" />
-        <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" strokeWidth="2" />
-        <ellipse cx="12" cy="12" rx="3.8" ry="8.5" fill="none" stroke="currentColor" strokeWidth="2" />
-        <path d="M3.5 12h17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-]
+const delay = (i: number) => ({ ['--i' as string]: i }) as CSSProperties
+
+/** A pill that pops when you press it, like an option in a lesson. */
+function PopChip({ children, tone }: { children: React.ReactNode; tone: 'red' | 'green' | 'blue' }) {
+  const [n, setN] = useState(0)
+  return (
+    <button type="button" key={n} className={`xp-chip xp-chip--${tone}${n ? ' is-popped' : ''}`} onClick={() => setN((v) => v + 1)}>
+      {children}
+    </button>
+  )
+}
 
 export function Explore() {
-  const [shrodiOpen, setShrodiOpen] = useState(false)
+  const sectionRef = useReveal<HTMLElement>(0.08)
 
   return (
-    <section className="explore" id="features" aria-label="Explore nuclear science">
-      <div className="explore-inner">
-        <div className="explore-head">
-          <p className="explore-eyebrow">Explore nuclear science</p>
-          <h2 className="explore-title">
-            Learn It. <span className="explore-highlight">Play It.</span> Discover It.
+    <section ref={sectionRef} className="explore section section--soft reveal" id="features" aria-label="Explore nuclear science">
+      <div className="section-inner">
+        <div className="section-head reveal-child">
+          <h2 className="section-title">
+            Learn It. <span className="chip-word">Play It.</span> Discover It.
           </h2>
-          <p className="explore-sub">
-            Step inside the AtomIQ universe — everything you can do, orbiting around one playful core.
-          </p>
+          <p className="section-sub">Step inside the AtomIQ universe: everything you can do, in one friendly place.</p>
         </div>
 
-        <div className="explore-universe">
-          <div className="explore-column">
-            {features.slice(0, 2).map((feature, index) => (
-              <article
-                key={feature.key}
-                className={`explore-card explore-card--${feature.accent} explore-float--${index + 1}`}
-              >
-                <span className="explore-card__icon" aria-hidden="true">
-                  {feature.icon}
-                </span>
-                <h3 className="explore-card__title">{feature.title}</h3>
-                <p className="explore-card__text">{feature.text}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="explore-core" id="shrodi" aria-label="Meet Shrodi">
-            <div className="explore-core__glow" aria-hidden="true" />
-            <div className="explore-core__ring explore-core__ring--1" aria-hidden="true">
-              <span className="explore-core__electron" />
+        <div className="xp-grid">
+          {/* Lessons */}
+          <article className="xp-card xp-card--lessons reveal-child" style={delay(1)}>
+            <div className="xp-stage xp-stage--yellow">
+              <ul className="xp-teachers" aria-label="The seven teachers">
+                {TEACHERS.map((t, i) => (
+                  <li key={t.id} style={{ ['--k' as string]: i, ['--c' as string]: t.color } as CSSProperties}>
+                    <span className="xp-teacher">
+                      <Teacher id={t.id} form="head" />
+                    </span>
+                    <em>{t.name}</em>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="explore-core__ring explore-core__ring--2" aria-hidden="true">
-              <span className="explore-core__electron" />
+            <div className="xp-body">
+              <h3>Interactive Lessons</h3>
+              <p>Break nuclear science down into short, easy-to-follow units. Every field has its own teacher to learn from.</p>
             </div>
-            <span className="explore-core__badge">Meet Shrodi</span>
-            <img
-              className="explore-core__mascot"
-              src="/images/mascot/happy.png"
-              alt="Shrodi, the AtomIQ mascot, cheering with arms up"
-              width={360}
-              height={397}
-              loading="lazy"
-            />
-            <h3 className="explore-core__title">Meet Shrodi, Your Learning Companion</h3>
-            <p className="explore-core__text">
-              Shrodi stays by your side as you learn — guiding each step, cheering your progress, and making nuclear science feel friendly.
-            </p>
+          </article>
 
-            <button
-              type="button"
-              className="explore-core__cta"
-              onClick={() => setShrodiOpen(true)}
-            >
-              Learn with Shrodi <span aria-hidden="true">→</span>
-            </button>
-          </div>
+          {/* Myth Smashers */}
+          <article className="xp-card xp-card--myth reveal-child" style={delay(2)}>
+            <div className="xp-stage xp-stage--red">
+              <div className="xp-myth">
+                <Obj id="radiation" className="xp-myth__obj" />
+                <div className="xp-myth__row">
+                  <PopChip tone="red">Myth</PopChip>
+                  <PopChip tone="green">Fact</PopChip>
+                </div>
+              </div>
+            </div>
+            <div className="xp-body">
+              <h3>Myth Smashers</h3>
+              <p>Challenge common misconceptions and find out what the science really says.</p>
+            </div>
+          </article>
 
-          <div className="explore-column">
-            {features.slice(2).map((feature, index) => (
-              <article
-                key={feature.key}
-                className={`explore-card explore-card--${feature.accent} explore-float--${index + 3}`}
-              >
-                <span className="explore-card__icon" aria-hidden="true">
-                  {feature.icon}
-                </span>
-                <h3 className="explore-card__title">{feature.title}</h3>
-                <p className="explore-card__text">{feature.text}</p>
-              </article>
-            ))}
-          </div>
+          {/* Atom Maze */}
+          <article className="xp-card xp-card--maze reveal-child" style={delay(3)}>
+            <div className="xp-stage xp-stage--sky xp-maze" aria-hidden="true">
+              <img className="xp-maze__coin xp-maze__coin--1" src="/images/maze/coin_gold.png" alt="" loading="lazy" />
+              <img className="xp-maze__coin xp-maze__coin--2" src="/images/maze/coin_gold.png" alt="" loading="lazy" />
+              <img className="xp-maze__gem" src="/images/maze/gem_blue.png" alt="" loading="lazy" />
+              <img className="xp-maze__flag" src="/images/maze/flag_yellow_a.png" alt="" loading="lazy" />
+              <img className="xp-maze__bug" src="/images/maze/ladybug_walk_a.png" alt="" loading="lazy" />
+              <span className="xp-maze__hero" />
+              <div className="xp-maze__ground">
+                {Array.from({ length: 9 }, (_, i) => (
+                  <img key={i} src="/images/maze/terrain_grass_block_top.png" alt="" loading="lazy" />
+                ))}
+              </div>
+            </div>
+            <div className="xp-body">
+              <h3>Atom Maze</h3>
+              <p>Run, jump and battle through levels, answering questions to beat what stands in your way.</p>
+            </div>
+          </article>
+
+          {/* AtomDex */}
+          <article className="xp-card xp-card--dex reveal-child" style={delay(4)}>
+            <div className="xp-stage xp-stage--purple">
+              <AppIcon id="atomdex" className="xp-dex__icon" />
+              <ul className="xp-dex__chips" aria-hidden="true">
+                <li>Isotope</li>
+                <li>Half-life</li>
+                <li>Fission</li>
+              </ul>
+            </div>
+            <div className="xp-body">
+              <h3>AtomDex</h3>
+              <p>Look up concepts and terms, with the sources behind every entry. Clip a line to your Field Notes.</p>
+            </div>
+          </article>
+
+          {/* Avatar + shop */}
+          <article className="xp-card xp-card--shop reveal-child" style={delay(5)}>
+            <div className="xp-stage xp-stage--pink">
+              <div className="xp-avatars">
+                <Avatar id="classic" className="xp-avatar xp-avatar--1" />
+                <Avatar id="bun" className="xp-avatar xp-avatar--2" />
+              </div>
+              <span className="xp-price">
+                <Obj id="diamond" /> 40
+              </span>
+            </div>
+            <div className="xp-body">
+              <h3>Make It Yours</h3>
+              <p>Earn diamonds from quests and spend them on hair, clothes, paints and patterns for your own avatar.</p>
+            </div>
+          </article>
         </div>
       </div>
-      <ShrodiModal open={shrodiOpen} onClose={() => setShrodiOpen(false)} />
     </section>
   )
 }

@@ -54,13 +54,14 @@ export function Navbar() {
           <img
             className="nav-brand__logo"
             src="/icon-128.png"
-            alt="AtomIQ logo"
+            alt=""
             width={44}
             height={44}
             loading="eager"
             decoding="async"
             fetchPriority="high"
           />
+          <span className="nav-brand__name">AtomIQ</span>
         </a>
 
         <ul className="nav-links">

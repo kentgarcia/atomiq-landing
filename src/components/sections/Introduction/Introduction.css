@@ -1,312 +1,148 @@
-/* Introduction — two columns: headline left, iPhone tour right. */
-
-.intro {
-  position: relative;
-  z-index: 1;
-  background: transparent;
-  padding: 40px 20px;
-}
-
-.intro-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 1060px;
-  margin: 0 auto;
-  background:
-    radial-gradient(circle at 50% 0%, #fff7ec 0%, transparent 60%),
-    #ffffff;
-  border: 2px solid #e5e5e5;
-  border-radius: 28px;
-  box-shadow: 0 6px 0 #e5e5e5;
-  padding: 44px 48px;
-}
-
 .intro-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 48px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   align-items: center;
+  gap: clamp(28px, 5vw, 72px);
 }
 
-.intro-copy {
-  max-width: 480px;
-}
-
-.intro-visual {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.intro-stage__glow {
-  position: absolute;
-  inset: 4% -14% 14%;
-  background:
-    radial-gradient(circle at 50% 28%, rgba(255, 138, 26, 0.24), transparent 60%),
-    radial-gradient(circle at 50% 78%, rgba(59, 155, 233, 0.2), transparent 60%);
-  filter: blur(12px);
-  pointer-events: none;
-}
-
-.intro-eyebrow {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  line-height: 1;
-  color: #52525b;
-  background: #ffffff;
-  border: 2px solid #e5e5e5;
-  border-radius: 999px;
-  padding: 9px 16px;
-  box-shadow: 0 3px 0 #e5e5e5;
-}
-
-.intro-title {
-  margin: 12px 0 0;
-  font-size: clamp(1.65rem, 3vw, 2.3rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  font-weight: 800;
-  color: #111;
+.intro-copy .section-title {
+  text-align: left;
 }
 
 .intro-text {
-  margin: 10px 0 0;
-  font-size: 0.92rem;
+  margin: 16px 0 28px;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 1.08rem;
   line-height: 1.55;
-  color: #4b4b4b;
-  max-width: 52ch;
 }
 
-/* iPhone frame — thin bezel with floating Dynamic Island.
-   Screenshots are true 1170x2532 captures with their own status bar,
-   so the island floats on top of the image like real hardware. */
-.iphone {
-  position: relative;
-  width: min(252px, 66vw);
-  aspect-ratio: 1170 / 2532;
-  background: #0c0c0e;
-  border-radius: 48px;
-  padding: 10px;
-  border: 1px solid #3a3a40;
-  box-shadow:
-    0 0 0 2px #101014,
-    0 28px 56px -22px rgba(17, 17, 17, 0.45);
-}
-
-.iphone__btn {
-  position: absolute;
-  background: #2b2b30;
-  border-radius: 3px;
-}
-
-.iphone__btn--mute {
-  left: -3px;
-  top: 150px;
-  width: 3px;
-  height: 32px;
-}
-
-.iphone__btn--vol-up {
-  left: -3px;
-  top: 194px;
-  width: 3px;
-  height: 62px;
-}
-
-.iphone__btn--vol-down {
-  left: -3px;
-  top: 262px;
-  width: 3px;
-  height: 62px;
-}
-
-.iphone__btn--power {
-  right: -3px;
-  top: 220px;
-  width: 3px;
-  height: 92px;
-}
-
-.iphone__screen {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 38px;
-  overflow: hidden;
-  background: #000;
-}
-
-.iphone__screen img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  scale: 1.05;
-  transition:
-    opacity 500ms ease,
-    scale 650ms ease;
-}
-
-.iphone__screen img.is-active {
-  opacity: 1;
-  scale: 1;
-}
-
-.iphone__island {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  translate: -50% 0;
-  width: 34%;
-  aspect-ratio: 4.6 / 1;
-  min-height: 17px;
-  background: #000;
-  border-radius: 999px;
-  z-index: 3;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-.iphone__lens {
-  position: absolute;
-  right: 11%;
-  top: 50%;
-  translate: 0 -50%;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #1e3a5f 0 2px, #05070c 3px);
-}
-
-.iphone__home {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  translate: -50% 0;
-  width: 38%;
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  z-index: 3;
-}
-
-/* Active screen feature card under the headline */
-.intro-feature {
-  margin-top: 22px;
-  background: var(--feature-bg, #fff4e5);
-  border: 2px solid var(--feature-accent, #ff8a1a);
-  border-radius: 20px;
-  box-shadow: 0 4px 0 var(--feature-accent-soft, #f3d9b5);
-  padding: 18px 20px;
-  min-height: 148px;
-}
-
-.intro-feature__title {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #111;
-  animation: intro-feature-in 350ms ease;
-}
-
-.intro-feature__text {
-  margin: 6px 0 0;
-  font-size: 0.92rem;
-  line-height: 1.55;
-  color: #4b4b4b;
-  animation: intro-feature-in 350ms ease;
-}
-
-@keyframes intro-feature-in {
-  from { opacity: 0; translate: 0 8px; }
-  to { opacity: 1; translate: 0 0; }
-}
-
-.intro-feature--orange { --feature-accent: #ff8a1a; --feature-bg: #fff4e5; --feature-accent-soft: #f3d9b5; }
-.intro-feature--blue { --feature-accent: #3b9be9; --feature-bg: #eef6fe; --feature-accent-soft: #c4e0f7; }
-.intro-feature--purple { --feature-accent: #8b5cf6; --feature-bg: #f3eefd; --feature-accent-soft: #d9cbf9; }
-.intro-feature--red { --feature-accent: #e85d5d; --feature-bg: #fdeeee; --feature-accent-soft: #f6c9c9; }
-.intro-feature--green { --feature-accent: #22c55e; --feature-bg: #ecfdf3; --feature-accent-soft: #bbe9cd; }
-.intro-feature--pink { --feature-accent: #ec4899; --feature-bg: #fdeef5; --feature-accent-soft: #f6c6dd; }
-
-/* Arrows + counter under the detail */
-.intro-nav {
-  display: flex;
-  align-items: center;
+.intro-tabs {
+  display: grid;
   gap: 12px;
-  margin-top: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.intro-arrow {
+/* each tab is a 3D card; the active one takes its screen's colour on its border and lip */
+.intro-tab {
+  --c: var(--line);
+  --cl: var(--line);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  background: #fff;
+  border: var(--border) solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 var(--lip) 0 var(--line);
+  color: var(--ink);
+  overflow: hidden;
+  transition:
+    transform 110ms var(--ease-out),
+    box-shadow 110ms var(--ease-out),
+    border-color 160ms var(--ease-out),
+    background 160ms var(--ease-out);
+}
+
+.intro-tab--yellow { --c: var(--yellow); --cl: var(--yellow-lip); --soft-c: var(--yellow-soft); }
+.intro-tab--green { --c: var(--green); --cl: var(--green-lip); --soft-c: var(--green-soft); }
+.intro-tab--blue { --c: var(--blue); --cl: var(--blue-lip); --soft-c: var(--blue-soft); }
+.intro-tab--purple { --c: var(--purple); --cl: var(--purple-lip); --soft-c: var(--purple-soft); }
+
+.intro-tab:active {
+  transform: translateY(var(--lip));
+  box-shadow: 0 0 0 var(--line);
+}
+
+.intro-tab.is-active {
+  border-color: var(--c);
+  box-shadow: 0 var(--lip) 0 var(--cl);
+  background: var(--soft-c);
+}
+
+.intro-tab:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.intro-tab__num {
+  flex: none;
+  display: grid;
+  place-items: center;
   width: 34px;
   height: 34px;
-  border-radius: 50%;
-  border: 2px solid #e5e5e5;
-  background: #fff;
-  box-shadow: 0 3px 0 #e5e5e5;
-  font-size: 1.3rem;
-  line-height: 1;
-  color: #111;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
+  border-radius: 12px;
+  background: var(--soft);
+  color: var(--faint);
+  font-weight: 900;
+  transition: background 160ms var(--ease-out), color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
 }
 
-.intro-arrow:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 0 #e5e5e5;
+.intro-tab.is-active .intro-tab__num {
+  background: var(--c);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--cl);
 }
 
-.intro-arrow:active {
-  transform: translateY(1px);
-  box-shadow: 0 1px 0 #e5e5e5;
+.intro-tab__body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
 }
 
-.intro-arrow:focus-visible {
-  outline: 3px solid #3b9be9;
-  outline-offset: 2px;
-}
-
-.intro-count {
-  font-size: 0.8rem;
+.intro-tab__body b {
+  font-size: 1.04rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #52525b;
-  font-variant-numeric: tabular-nums;
 }
 
-.intro-progress {
-  width: min(220px, 70%);
-  height: 4px;
-  border-radius: 999px;
-  background: #f1f1f1;
-  margin-top: 14px;
+/* the description only opens on the active tab */
+.intro-tab__text {
+  display: grid;
+  grid-template-rows: 0fr;
+  color: var(--ink-2);
+  font-size: 0.94rem;
+  line-height: 1.45;
+  font-weight: 500;
+  opacity: 0;
+  transition: grid-template-rows 220ms var(--ease-out), opacity 220ms var(--ease-out);
+}
+.intro-tab__text > span {
+  min-height: 0;
   overflow: hidden;
 }
-
-.intro-progress span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #ff8a1a, #3b9be9);
-  transform-origin: left center;
-  animation: intro-progress 5s linear forwards;
+.intro-tab.is-active .intro-tab__text {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.intro-tab.is-active .intro-tab__text > span {
+  padding-top: 2px;
 }
 
-.intro-progress span.is-paused {
+.intro-tab__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: transparent;
+}
+
+.intro-tab__progress i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--c);
+  transform-origin: 0 50%;
+  animation: intro-progress var(--ms, 7s) linear forwards;
+}
+
+.intro-tab__progress i.is-paused {
   animation-play-state: paused;
 }
 
@@ -315,70 +151,112 @@
   to { transform: scaleX(1); }
 }
 
-@media (max-width: 900px) {
-  .intro-inner {
-    padding: 36px 28px 32px;
-  }
+/* ---------- phone ---------- */
 
+.intro-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 560px;
+  --s: 1;
+}
+
+.phone {
+  position: relative;
+  width: calc(280px * var(--s) + 20px);
+  padding: 10px;
+  border-radius: 46px;
+  background: #2b2f33;
+  box-shadow:
+    0 10px 0 #1b1e21,
+    0 30px 40px -18px rgba(0, 0, 0, 0.35);
+}
+
+.phone__screen {
+  position: relative;
+  width: calc(280px * var(--s));
+  height: calc(588px * var(--s));
+  border-radius: 36px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.phone__page {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
+  pointer-events: none;
+}
+
+.phone__page.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.phone__fit {
+  width: 280px;
+  height: 588px;
+  transform-origin: 0 0;
+  scale: var(--s);
+}
+
+.phone__island {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  width: 78px;
+  height: 22px;
+  margin-left: -39px;
+  border-radius: 999px;
+  background: #1b1e21;
+}
+
+@media (max-width: 900px) {
   .intro-grid {
     grid-template-columns: 1fr;
-    gap: 32px;
   }
-
-  .intro-copy {
-    max-width: 620px;
-    margin: 0 auto;
+  .intro-copy .section-title {
     text-align: center;
   }
-
-  .intro-feature {
+  .intro-copy {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+  .intro-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .intro-tabs {
+    width: 100%;
+    max-width: 560px;
     text-align: left;
   }
-
-  .intro-nav {
-    justify-content: center;
-  }
-
-  .iphone {
-    width: min(240px, 64vw);
+  .intro-visual {
+    order: -1;
+    min-height: 520px;
+    --s: 0.9;
   }
 }
 
-@media (max-width: 560px) {
-  .intro {
-    padding: 0 16px 48px;
-  }
-
-  .intro-inner {
-    padding: 28px 20px 24px;
-    border-radius: 24px;
-  }
-
-  .intro-grid {
-    gap: 24px;
-  }
-
-  .iphone {
-    width: min(220px, 62vw);
-  }
-
-  .intro-feature {
-    min-height: 0;
+@media (max-width: 420px) {
+  .intro-visual {
+    --s: 0.82;
+    min-height: 480px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .iphone__screen img {
+  .phone__page,
+  .intro-tab__text {
     transition: none;
   }
-
-  .intro-progress span {
+  .intro-tab__progress i {
     animation: none;
     transform: scaleX(1);
-  }
-
-  .intro-feature__title,
-  .intro-feature__text {
-    animation: none;
+    opacity: 0.35;
   }
 }

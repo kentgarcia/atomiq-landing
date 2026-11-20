@@ -1,0 +1,128 @@
+/* Shared keyframes: the app's motion language (settle, pop, stamp, band of light, twinkle). */
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    translate: var(--dx, 0px) var(--dy, 12px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* The option pop, in CSS: squash, spring up tall, hang, fall stretched, land squashed, hop, settle. */
+@keyframes pop {
+  0% { transform: scale(1, 1) translateY(0); }
+  12% { transform: scale(1.06, 0.9) translateY(2px); }
+  34% { transform: scale(0.96, 1.08) translateY(-9px); }
+  50% { transform: scale(1, 1.02) translateY(-8px); }
+  66% { transform: scale(0.97, 1.05) translateY(0); }
+  76% { transform: scale(1.04, 0.94) translateY(1px); }
+  88% { transform: scale(1, 1) translateY(-3px); }
+  100% { transform: scale(1, 1) translateY(0); }
+}
+
+/* A title stamped down: held big and tilted, drops, squashes on contact, settles. */
+@keyframes stamp {
+  0% { opacity: 0; transform: scale(1.7) rotate(-7deg); }
+  45% { opacity: 1; transform: scale(1.7) rotate(-7deg); }
+  68% { opacity: 1; transform: scale(0.94, 0.9) rotate(-1deg); }
+  82% { transform: scale(1.03, 1.04) rotate(-1.5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-1deg); }
+}
+
+@keyframes band {
+  0% { transform: skewX(-22deg) translateX(0); opacity: 1; }
+  38%, 100% { transform: skewX(-22deg) translateX(620%); opacity: 1; }
+}
+
+@keyframes twinkle {
+  0%, 100% { transform: scale(0.2) rotate(0deg); opacity: 0; }
+  40% { transform: scale(1) rotate(45deg); opacity: 1; }
+  70% { transform: scale(0.6) rotate(90deg); opacity: 0.8; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-9px); }
+  36% { transform: translateX(8px); }
+  54% { transform: translateX(-6px); }
+  72% { transform: translateX(4px); }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(var(--bob, -8px)) rotate(var(--tilt, 0deg)); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.35); }
+  70% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* a word on a chip lands: drops in slightly big, squashes, settles (uses `scale` so it never fights the chip's tilt) */
+@keyframes chip-land {
+  0% { opacity: 0; scale: 1.35; translate: 0 -10px; }
+  55% { opacity: 1; scale: 0.94 0.9; translate: 0 2px; }
+  78% { scale: 1.03; translate: 0 -1px; }
+  100% { opacity: 1; scale: 1; translate: 0 0; }
+}
+
+/* the page's top progress bar, driven by the scroll position itself */
+@keyframes scroll-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes nav-drop {
+  0% { opacity: 0; transform: translateY(-26px) scale(0.96); }
+  70% { opacity: 1; transform: translateY(2px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes road-draw {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes dots {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* A four-point sparkle, drawn as a rotated square pair. */
+.sparkle {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  animation: twinkle 2.4s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.sparkle::before,
+.sparkle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--sc, #fff);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sparkle {
+    animation: none;
+    opacity: 0.8;
+    transform: scale(0.8);
+  }
+}

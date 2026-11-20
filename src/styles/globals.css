@@ -1,6 +1,7 @@
-/* Global base styles for atomiq-landing. */
+/* Global base styles + the shared pieces of the AtomIQ look. */
 @import './variables.css';
 @import './typography.css';
+@import './motion.css';
 
 *,
 *::before,
@@ -20,71 +21,226 @@ a {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
-/* Full-screen sections — one section per viewport.
-   min-height (not height) so taller content can still grow
-   instead of being cut off on smaller screens. */
-.hero,
-.intro,
-.explore,
-.challenge,
-.journey,
-.team,
-.faq,
-.final {
-  min-height: 100svh;
+img,
+svg {
+  display: block;
 }
 
-.hero,
-.intro,
-.explore,
-.challenge,
-.journey,
-.team,
-.faq {
-  display: flex;
-  flex-direction: column;
+button {
+  font: inherit;
+}
+
+/* ---------- sections ---------- */
+
+.section {
+  position: relative;
+  padding: clamp(72px, 10vw, 128px) 20px;
+}
+
+.section--soft {
+  background: var(--soft);
+}
+
+.section-inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.section-head {
+  max-width: 680px;
+  margin: 0 auto clamp(36px, 6vw, 64px);
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--yellow-soft);
+  color: var(--yellow-ink);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.6vw, 3rem);
+  line-height: 1.08;
+}
+
+.section-sub {
+  margin: 16px auto 0;
+  max-width: 560px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+/* A word on a yellow 3D chip, the way the app's lesson card wears its title. */
+.chip-word {
+  display: inline-block;
+  padding: 0 0.28em 0.04em;
+  margin: 0 -0.04em;
+  border-radius: 0.28em;
+  background: var(--yellow);
+  color: #fff;
+  box-shadow: 0 0.09em 0 var(--yellow-lip);
+  text-shadow: 0 0.04em 0 var(--yellow-lip);
+}
+
+/* ---------- 3D card: 2 px border plus a 4 px lip ---------- */
+
+.card3d {
+  background: #fff;
+  border: var(--border) solid var(--line);
+  border-radius: var(--r-card);
+  box-shadow: 0 var(--lip) 0 var(--line);
+}
+
+/* ---------- 3D button: a face on a lip; pressing sinks it by the lip ---------- */
+
+.btn {
+  --face: var(--button);
+  --lipc: var(--button-lip);
+  --label: #fff;
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: var(--r-ctl);
+  background: var(--face);
+  color: var(--label);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 0 2px 0 var(--lipc);
+  box-shadow: 0 var(--lip) 0 var(--lipc);
+  cursor: pointer;
+  overflow: visible;
+  transition:
+    transform 110ms var(--ease-out),
+    box-shadow 110ms var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
 }
 
-.hero-inner,
-.intro-inner,
-.explore-inner,
-.challenge-inner,
-.journey-inner,
-.team-inner,
-.faq-inner {
-  width: 100%;
+.btn:active {
+  transform: translateY(var(--lip));
+  box-shadow: 0 0 0 var(--lipc);
 }
 
-/* Shared scroll-reveal — sections opt in with `class="reveal"`,
-   children stagger with `class="reveal-child"` + `--i` index.
-   Uses `translate` (not `transform`) so it never clobbers
-   card transforms like the leader-card lift.
-   Reveal runs as an animation so hover transitions stay snappy. */
+.btn:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+
+.btn--white {
+  --face: #fff;
+  --lipc: var(--line-strong);
+  --label: var(--blue-lip);
+  border: var(--border) solid var(--line);
+  text-shadow: none;
+}
+.btn--blue {
+  --face: var(--blue);
+  --lipc: var(--blue-lip);
+}
+.btn--green {
+  --face: var(--green);
+  --lipc: var(--green-lip);
+}
+.btn--red {
+  --face: var(--red);
+  --lipc: var(--red-lip);
+}
+.btn--lg {
+  min-height: 60px;
+  padding: 0 40px;
+  font-size: 1.08rem;
+  border-radius: 18px;
+}
+
+/* a band of light that crosses the face now and then (the app's Button shine) */
+.btn--shine {
+  overflow: hidden;
+}
+.btn--shine::after {
+  content: '';
+  position: absolute;
+  inset: -20% auto -20% -40%;
+  width: 28%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: skewX(-22deg) translateX(0);
+  animation: band 4.2s var(--ease-out) 1.4s infinite;
+  pointer-events: none;
+}
+
+/* ---------- reveal: pages "settle" — fade and a 12 px rise, 220 ms, 60 ms apart ---------- */
+
 .reveal .reveal-child {
   opacity: 0;
-  translate: 0 28px;
+  translate: var(--dx, 0px) var(--dy, 12px);
 }
 
+/* scrolling in is slower than a tap: 480 ms, 90 ms apart, the same ease-out and no spring */
 .reveal.is-visible .reveal-child {
   opacity: 1;
   translate: 0 0;
-  animation: reveal-up 0.7s cubic-bezier(0.2, 0.9, 0.28, 1.1) backwards;
-  animation-delay: calc(var(--i, 0) * 110ms);
-  will-change: opacity, translate;
+  animation: settle 480ms var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
 }
 
-@keyframes reveal-up {
-  from {
-    opacity: 0;
-    translate: 0 28px;
-  }
-  to {
-    opacity: 1;
-    translate: 0 0;
+/* two-column sections: the words come from the left, the picture from the right; cards rise further */
+.intro-grid > :first-child,
+.chat-grid > :first-child,
+.faq-grid > :first-child,
+.challenge-grid > :first-child { --dx: -32px; --dy: 0px; }
+.intro-grid > :last-child,
+.chat-grid > :last-child,
+.faq-grid > :last-child,
+.challenge-grid > :last-child { --dx: 32px; --dy: 0px; }
+.xp-card, .team-card, .jr-stop { --dy: 24px; }
+
+/* a highlighted word lands on its chip once its section is in view */
+.reveal.is-visible .chip-word,
+.reveal.is-visible .final-highlight {
+  animation: chip-land 560ms var(--ease-out) 280ms backwards;
+}
+
+/* ---------- scroll progress: a thin yellow bar under the top edge ---------- */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 4px;
+  z-index: 60;
+  background: var(--yellow);
+  box-shadow: 0 2px 0 var(--yellow-lip);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: scroll-fill linear both;
+    animation-timeline: scroll(root);
   }
 }
 
@@ -92,11 +248,32 @@ html {
   html {
     scroll-behavior: auto;
   }
-
   .reveal .reveal-child,
   .reveal.is-visible .reveal-child {
     opacity: 1;
     translate: 0 0;
     animation: none;
   }
+  .btn--shine::after {
+    display: none;
+  }
+  .reveal.is-visible .chip-word,
+  .reveal.is-visible .final-highlight,
+  .scroll-progress,
+  .nav-pill,
+  .journey.is-visible .jr-road::before {
+    animation: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
